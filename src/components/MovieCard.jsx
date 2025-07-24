@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { BookOpen, Heart, Star } from "lucide-react";
 import { getImageUrl } from "../utils/tmdb";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, onClick }) => {
   const releaseDate = movie.release_date;
   const [year, month, day] = releaseDate.split("-");
   const ordered_releaseDate = `${day}-${month}-${year}`;
@@ -11,6 +11,7 @@ const MovieCard = ({ movie }) => {
     <motion.div
       whileHover={{ scale: 1.05, y: -5 }}
       whileTap={{ scale: 0.95 }}
+      onClick={onClick}
       className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer group"
       layout
     >

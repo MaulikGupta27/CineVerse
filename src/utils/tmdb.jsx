@@ -3,6 +3,7 @@ import axios from "axios";
 const BASE_URL = "https://api.themoviedb.org/3";
 const api_key = import.meta.env.VITE_TMDB_API_KEY;
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+const BACKDROP_BASE_URL = 'https://image.tmdb.org/t/p/w1280';
 
 const tmdbApi = axios.create({
   baseURL: BASE_URL,
@@ -15,10 +16,14 @@ export const getImageUrl = (path) => {
   return `${IMAGE_BASE_URL}${path}`;
 }
 
+export const getBackdropUrl = (path) => {
+  return `${BACKDROP_BASE_URL}${path}`;
+};
+
 export const getTrendingMovies = async () => {
   try {
     const response = await tmdbApi.get("/trending/movie/day");
-    console.log(response.data.results);
+    // console.log(response.data.results);
     return response.data.results;
   } catch (error) {
     console.error("Error fetching trending movies:", error);
@@ -43,5 +48,19 @@ export const getUpcomingMovies = async () => {
   } catch (error) {
     console.error("Error fetching upcoming movies:", error);
     return [];
+  }
+};
+
+export const getMovieDetails = async (id) => {
+  try {
+    const response = await tmdbApi.get(`/movie/${id}`, {
+      params: {
+        append_to_response: 'credits,videos'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching movie details:', error);
+    return null;
   }
 };

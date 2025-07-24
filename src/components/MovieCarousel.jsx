@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import MovieCard from "./MovieCard";
 
-const MovieCarousel = ({ title, movies }) => {
+const MovieCarousel = ({ title, movies, onMovieClick }) => {
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
@@ -45,12 +45,13 @@ const MovieCarousel = ({ title, movies }) => {
       >
         {movies.map((movie, index) => (
           <motion.div
+            key={movie.id}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
             className="flex-shrink-0 w-64"
           >
-            <MovieCard movie={movie} />
+            <MovieCard movie={movie} onClick={() => onMovieClick(movie)} />
           </motion.div>
         ))}
       </motion.div>
